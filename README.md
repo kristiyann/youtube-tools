@@ -35,9 +35,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
    To create a secure NextAuth secret:
    1. Open a terminal or command prompt.
    2. Run the following command to generate a random 32-character string:
-      
+      ```  
       openssl rand -base64 32
-
+      ```
    3. Copy the output and use it as your NEXTAUTH_SECRET in the .env.local file.
 
    Alternatively, you can use a password generator to create a long, random string (at least 32 characters) combining uppercase and lowercase letters, numbers, and symbols.
