@@ -7,7 +7,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 1. Clone the repository:
    ```bash
    git clone https://github.com/youtube-description-text-replacer.git
-   cd your-repo-name
+   cd youtube-description-text-replacer
    ```
 
 2. Create a `.env.local` file in the root directory of the project.
