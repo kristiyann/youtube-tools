@@ -62,7 +62,6 @@ export const fetchYouTubeVideos = withAuth(async (limit: number, offset: number,
 export const updateVideoDescriptions = withAuth(async (videoIds: string[], textToReplace: string, replacementText: string) => {
 	const youtube = await getInstance();
 
-	console.log("Updating the following videos: ", videoIds);
 	const results = await Promise.all(videoIds.map(async (videoId) => {
 		try {
 			const videoResponse = await youtube.videos.list({
@@ -80,6 +79,7 @@ export const updateVideoDescriptions = withAuth(async (videoIds: string[], textT
 
 			const oldDescription = video.snippet?.description || '';
 			const newDescription = oldDescription.replace(new RegExp(regexTextToReplace, 'g'), regexReplacementText);
+			console.log(newDescription);
 
 			const updatedVideo = {
 				part: ['snippet'],

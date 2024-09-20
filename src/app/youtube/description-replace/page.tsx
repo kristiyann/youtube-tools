@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -44,7 +45,7 @@ function DescriptionReplace() {
 
 	const [actionAlert, setActionAlert] = useState<AlertProps>({});
 	const [showAlert, setShowAlert] = useState(false);
-	
+
 	const [descriptionToReplace, setDescriptionToReplace] = useState('');
 	const [replacementText, setReplacementText] = useState('');
 
@@ -52,7 +53,7 @@ function DescriptionReplace() {
 	const [selectedVideos, setSelectedVideos] = useState<Set<string>>(new Set());
 	const [selectAll, setSelectAll] = useState(false);
 
-	const itemsPerPage = 20;
+	const itemsPerPage = 10;
 	const [currentPage, setCurrentPage] = useState(1);
 	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -66,7 +67,7 @@ function DescriptionReplace() {
 				setShowAlert(false);
 
 				clearTimeout(toRef);
-			}, 8000);
+			}, 10000);
 		}
 	}, [showAlert]);
 
@@ -80,7 +81,7 @@ function DescriptionReplace() {
 				console.error(errorMessage);
 
 				if (errorMessage.includes(YouTubeErrorStrings.QuotaLimitReached)) {
-					setActionAlert({ status: 'error', message: 'Our daily YouTube API quota was reached. This means videos cannot be displayed and edited 😔. Please try again tomorrow!'});
+					setActionAlert({ status: 'error', message: 'Our daily YouTube API quota was reached. This means videos cannot be displayed and edited 😔. Please try again tomorrow!' });
 					setShowAlert(true);
 				}
 			}
@@ -113,14 +114,29 @@ function DescriptionReplace() {
 	}
 
 	const handleApplyChanges = async () => {
-		const result = await updateVideoDescriptions(Array.from(selectedVideos), descriptionToReplace, replacementText);
-		console.log(result);
+		try {
+			const result = await updateVideoDescriptions(Array.from(selectedVideos), descriptionToReplace, replacementText);
+			const numSuccessfulVideos = result.filter(item => item.success).length;
 
-		const numSuccessfulVideos = result.filter(item => item.success).length;
+			setIsDialogOpen(false);
 
-		setIsDialogOpen(false);
-		setActionAlert({ status: 'success', message: `Description update was successful for ${numSuccessfulVideos} videos! ✔️`});
-		setShowAlert(true);
+			setActionAlert({ status: 'success', message: `Description update was successful for ${numSuccessfulVideos} videos! ✔️` });
+			setShowAlert(true);
+
+			setSelectedVideos(new Set());
+			setSelectAll(false);
+		} catch (err) {
+			const errorMessage = err instanceof Error ? err.message : String(err);
+			console.error('Error updating video descriptions:', err);
+
+			if (errorMessage.includes(YouTubeErrorStrings.QuotaLimitReached)) {
+				setActionAlert({ status: 'error', message: 'Our daily YouTube API quota was reached. This means videos cannot be displayed and edited 😔. Please try again tomorrow!' });
+				setShowAlert(true);
+			} else {
+				setActionAlert({ status: 'error', message: 'An error occurred while updating video descriptions. Please try again!' });
+				setShowAlert(true);
+			}
+		}
 	}
 
 	const paginatedVideos = videos.slice(
@@ -265,8 +281,8 @@ function DescriptionReplace() {
 						</PaginationItem>
 					</PaginationContent>
 				</Pagination>
-				{showAlert ? <DefaultAlert message={actionAlert.message} status={actionAlert.status} /> : <></>}
 			</main>
+			{showAlert && <DefaultAlert message={actionAlert.message} status={actionAlert.status} />}
 		</div>
 	)
 }
