@@ -41,7 +41,7 @@ export const fetchYouTubeVideos = withAuth(async (limit: number, offset: number,
 				part: ['snippet'],
 				forMine: true,
 				type: ['video'],
-				maxResults: 50,
+				maxResults: limit,
 				pageToken: pageToken,
 			});
 

@@ -74,16 +74,13 @@ function DescriptionReplace() {
 	useEffect(() => {
 		const getVideos = async () => {
 			try {
-				const fetchedVideos = await fetchYouTubeVideos(20, 0, true);
+				const fetchedVideos = await fetchYouTubeVideos(50, 0, true);
 				setVideos(fetchedVideos as Video[]);
 			} catch (err) {
 				const errorMessage = err instanceof Error ? err.message : String(err);
 				console.error(errorMessage);
-
-				if (errorMessage.includes(YouTubeErrorStrings.QuotaLimitReached)) {
-					setActionAlert({ status: 'error', message: 'Our daily YouTube API quota was reached. This means videos cannot be displayed and edited 😔. Please try again tomorrow!' });
-					setShowAlert(true);
-				}
+				setActionAlert({ status: 'error', message: 'Our daily YouTube API quota was reached. This means videos cannot be displayed and edited 😔. Please try again tomorrow!' });
+				setShowAlert(true);
 			}
 		};
 
