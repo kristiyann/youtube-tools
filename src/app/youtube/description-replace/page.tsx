@@ -173,7 +173,7 @@ function DescriptionReplace() {
 					</div>
 				</div>
 
-				<div className="flex items-center justify-between">
+				<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
 					<div className="flex items-center space-x-2">
 						<Checkbox
 							id="selectAll"
@@ -217,40 +217,44 @@ function DescriptionReplace() {
 					</Dialog>
 				</div>
 
-				<Table className="dark:bg-nxp-dark-secondary dark:text-gray-300">
-					<TableHeader>
-						<TableRow className='hover:bg-gray-700'>
-							<TableHead className="w-[50px]">Select</TableHead>
-							<TableHead>Thumbnail</TableHead>
-							<TableHead>ID</TableHead>
-							<TableHead>Name</TableHead>
-						</TableRow>
-					</TableHeader>
-					<TableBody>
-						{paginatedVideos.map((video) => (
-							<TableRow key={video.id.videoId} className="hover:bg-gray-700">
-								<TableCell>
-									<Checkbox
-										checked={selectedVideos.has(video.id.videoId)}
-										onCheckedChange={() => handleCheckboxChange(video.id.videoId)}
-									/>
-								</TableCell>
-								<TableCell>
-									<img
-										src={video.snippet.thumbnails.default.url}
-										alt={`Thumbnail for ${video.snippet.title}`}
-										className="w-20 h-auto"
-									/>
-								</TableCell>
-								<TableCell>{video.id.videoId}</TableCell>
-								<TableCell>{video.snippet.title}</TableCell>
+				<div className="overflow-x-auto">
+					<Table className="dark:bg-nxp-dark-secondary dark:text-gray-300 w-full">
+						<TableHeader>
+							<TableRow className='hover:bg-gray-700'>
+								<TableHead className="w-[50px]">Select</TableHead>
+								<TableHead className="w-[80px]">Thumbnail</TableHead>
+								<TableHead className="hidden md:table-cell">ID</TableHead>
+								<TableHead>Name</TableHead>
 							</TableRow>
-						))}
-					</TableBody>
-				</Table>
+						</TableHeader>
+						<TableBody>
+							{paginatedVideos.map((video) => (
+								<TableRow key={video.id.videoId} className="hover:bg-gray-700">
+									<TableCell className="px-2 sm:px-4">
+										<Checkbox
+											checked={selectedVideos.has(video.id.videoId)}
+											onCheckedChange={() => handleCheckboxChange(video.id.videoId)}
+										/>
+									</TableCell>
+									<TableCell className="px-2 sm:px-4">
+										<img
+											src={video.snippet.thumbnails.default.url}
+											alt={`Thumbnail for ${video.snippet.title}`}
+											className="w-16 h-auto sm:w-20"
+										/>
+									</TableCell>
+									<TableCell className="hidden md:table-cell">{video.id.videoId}</TableCell>
+									<TableCell className="px-2 sm:px-4">
+										<span className="line-clamp-2 sm:line-clamp-1">{video.snippet.title}</span>
+									</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</div>
 
 				<Pagination>
-					<PaginationContent>
+					<PaginationContent className="flex-wrap justify-center">
 						<PaginationItem>
 							<PaginationPrevious
 								onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
@@ -259,7 +263,7 @@ function DescriptionReplace() {
 							/>
 						</PaginationItem>
 						{[...Array(totalPages)].map((_, i) => (
-							<PaginationItem key={i}>
+							<PaginationItem key={i} className="hidden sm:block">
 								<PaginationLink
 									onClick={() => setCurrentPage(i + 1)}
 									isActive={currentPage === i + 1}
@@ -269,6 +273,11 @@ function DescriptionReplace() {
 								</PaginationLink>
 							</PaginationItem>
 						))}
+						<PaginationItem className="sm:hidden">
+							<span className="px-4 py-2 dark:bg-gray-700 dark:text-gray-300">
+								{currentPage} / {totalPages}
+							</span>
+						</PaginationItem>
 						<PaginationItem>
 							<PaginationNext
 								onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
