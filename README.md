@@ -76,7 +76,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
      - Modify the `handleApplyChanges` function to alter the description update logic.
 
 2. **Image Transformer**
-   - Location: `src/app/youtube/img-transformer/page.tsx`
+   - Location: `src/app/youtube/image-transformer/page.tsx`
    - Used to turn square images to 1920x1080 with a blurred background to prevent YouTube setting your video as a short.
 
 3. **Authentication**
