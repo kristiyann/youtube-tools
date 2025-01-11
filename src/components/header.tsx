@@ -17,7 +17,7 @@ export function Header() {
 				</h1>
 				<div className="w-full px-7 flex items-start space-x-6">
 					<Link href="/youtube/description-replace" className="hover:text-gray-400">Replace Description Text</Link>
-					<Link href="/youtube/image-to-fullhd" className="hover:text-gray-400">Turn Image to Full HD</Link>
+					<Link href="/youtube/image-transformer" className="hover:text-gray-400">Image Transformer</Link>
 				</div>
 				<div className="flex items-center space-x-4">
 					{session ? (

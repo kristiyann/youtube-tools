@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { transformImage } from '@/app/actions/transformImage';
 import { Header } from '@/components/header';
 
-export default function ImageEditor() {
+export default function ImageTransformer() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 	const [error, setError] = useState<string | null>(null);

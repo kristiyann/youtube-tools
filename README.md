@@ -75,18 +75,18 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
      - Adjust the `itemsPerPage` constant to change the number of videos displayed per page.
      - Modify the `handleApplyChanges` function to alter the description update logic.
 
-2. **Authentication**
+2. **Image Transformer**
+   - Location: `src/app/youtube/img-transformer/page.tsx`
+   - Used to turn square images to 1920x1080 with a blurred background to prevent YouTube setting your video as a short.
+
+3. **Authentication**
    - Uses NextAuth.js for authentication
    - Configuration: `src/pages/api/auth/[...nextauth].ts`
    - To add or modify authentication providers, edit this file.
 
-3. **UI Components**
+4. **UI Components**
    - Located in `src/components`
    - To modify existing components or add new ones, create or edit files in this directory.
-
-4. **API Routes**
-   - Located in `src/pages/api`
-   - To add new API endpoints or modify existing ones, create or edit files in this directory.
 
 5. **Styling**
    - The project uses Tailwind CSS for styling.
